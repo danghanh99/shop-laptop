@@ -1,18 +1,19 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  database: shop_laptop
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: admin_helper_user
-  password: 123
+  username: admin
+  password: 123456
 
 development:
   <<: *default
-  database: db/shop_laptop_development
+  database: shop_laptop_development
 
 test:
   <<: *default
-  database: db/shop_laptop_test
+  database: shop_laptop_test
 
 production:
   <<: *default
-  database: db/shop_laptop_production
+  database: shop_laptop_production
