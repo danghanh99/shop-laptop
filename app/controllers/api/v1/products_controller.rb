@@ -4,7 +4,7 @@ module Api::V1
 
     def index
       products = Product.all
-      render_resources(products, :ok, ProductSerializer)
+      render_collection products
     end
 
     def show
