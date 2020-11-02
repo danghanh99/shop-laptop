@@ -3,7 +3,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :categories
       resources :products
-      resources :users
+      resources :users do
+        member do
+          patch '/password', to: 'users#update_password'
+        end
+      end
     end
   end
 end
