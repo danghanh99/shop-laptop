@@ -9,6 +9,28 @@ class User < ApplicationRecord
   VALID_PHONE_NUMBER_REGEX = /\d[0-9]\)*\z/.freeze
   validates :phone, presence: true, allow_nil: true, length: { maximum: 25 },
                             format: { with: VALID_PHONE_NUMBER_REGEX }
+  attr_accessor :password
+
+  PASSWORD_FORMAT = /\A(?!.*\s)/x.freeze
+  validates :password, presence: true, length: { in: 6..40 },
+                            format: { with: PASSWORD_FORMAT }, on: %i[create account_setup]
+  before_create :encrypt_password
+
+  def update_password(password_params)
+    raise(ArgumentError, 'Your password was incorrect.') unless check_valid_password(password_params[:old_password])
+
+    self.password = password_params[:new_password]
+    raise(ArgumentError, errors.messages) unless valid?(:account_setup)
+
+    encrypt_password
+    save!
+  end
+
+  def jwt_payload
+    {
+      user_id: id
+    }
+  end
 
   def encrypt_password
     self.encrypted_password = User.generate_encrypted_password(password)
