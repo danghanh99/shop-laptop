@@ -26,6 +26,24 @@ class User < ApplicationRecord
     save!
   end
 
+  def generate_password_token
+    self.reset_password_token = SecureRandom.rand(100_000..999_999)
+    self.reset_password_sent_at = Time.now
+    save!
+  end
+
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
+
+  def password_token_valid?(token)
+    reset_password_token == token && password_reset_not_expired?
+  end
+
+  def password_reset_not_expired?
+    Time.now < (reset_password_sent_at + RESET_TOKEN_LIFESPAN).localtime
+  end
+
   def jwt_payload
     {
       user_id: id

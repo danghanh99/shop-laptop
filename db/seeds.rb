@@ -47,6 +47,14 @@ macbook_1 = Product.create_with(
   memory: 512,
 ).find_or_create_by(name: 'Macbook pro 2020')
 
+User.create_with(
+  email: "huytran.301099@gmail.com",
+  address: FFaker::Address.street_address,
+  name: FFaker::Name.last_name,
+  password: '123456',
+  phone: '0123456789',
+).find_or_create_by(email: "huytran.301099@gmail.com")
+
 10.times do |i|
   User.create_with(
     email: "user_#{i}@gmail.com",

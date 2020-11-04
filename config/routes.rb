@@ -9,6 +9,9 @@ Rails.application.routes.draw do
       resources :carts
       resources :orders
       resources :order_items
+      post 'password/validate_token', to: 'password#validate_token'
+      resources :password, only: %i[create]
+      patch 'password/reset', to: 'password#update'
       resources :users do
         member do
           patch '/password', to: 'users#update_password'
