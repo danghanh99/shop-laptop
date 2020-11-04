@@ -48,11 +48,12 @@ macbook_1 = Product.create_with(
 ).find_or_create_by(name: 'Macbook pro 2020')
 
 10.times do |i|
-  User.create_with(
+  user = User.create_with(
     email: "user_#{i}@gmail.com",
     address: FFaker::Address.street_address,
     name: FFaker::Name.last_name,
     password: '123456',
     phone: '0123456789',
   ).find_or_create_by(email: "user_#{i}@gmail.com")
+  Cart.create_with( user_id: user.id ).find_or_create_by(user_id: user.id)
 end
