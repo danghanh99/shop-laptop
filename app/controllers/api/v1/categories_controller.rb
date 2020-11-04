@@ -4,7 +4,7 @@ module Api::V1
 
     def index
       categories = Category.all
-      render_resources(categories, :ok, CategorySerializer)
+      render_collection categories
     end
 
     def show
