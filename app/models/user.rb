@@ -9,6 +9,7 @@ class User < ApplicationRecord
   VALID_PHONE_NUMBER_REGEX = /\d[0-9]\)*\z/.freeze
   validates :phone, presence: true, allow_nil: true, length: { maximum: 25 },
                             format: { with: VALID_PHONE_NUMBER_REGEX }
+  RESET_TOKEN_LIFESPAN = 15.minutes
   attr_accessor :password
 
   PASSWORD_FORMAT = /\A(?!.*\s)/x.freeze
