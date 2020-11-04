@@ -24,6 +24,12 @@ class User < ApplicationRecord
     save!
   end
 
+  def jwt_payload
+    {
+      user_id: id
+    }
+  end
+
   def encrypt_password
     self.encrypted_password = User.generate_encrypted_password(password)
   end
