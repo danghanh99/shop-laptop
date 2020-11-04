@@ -13,6 +13,7 @@ class Api::V1::UsersController < ApplicationController
   def create
     user = User.new(create_params)
     user.save!
+    Cart.create! user_id: user.id
     render_resource user, :create
   end
 
