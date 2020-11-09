@@ -1,8 +1,9 @@
 class Api::V1::UsersController < ApplicationController
+  before_action :current_user
   before_action :set_user, only: %i[show update destroy update_password]
 
   def index
-    users = User.all
+    users = User.all.includes(:cart)
     render_collection users
   end
 

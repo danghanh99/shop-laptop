@@ -9,6 +9,7 @@ class User < ApplicationRecord
   VALID_PHONE_NUMBER_REGEX = /\d[0-9]\)*\z/.freeze
   validates :phone, presence: true, allow_nil: true, length: { maximum: 25 },
                             format: { with: VALID_PHONE_NUMBER_REGEX }
+  RESET_TOKEN_LIFESPAN = 15.minutes
   attr_accessor :password
 
   PASSWORD_FORMAT = /\A(?!.*\s)/x.freeze
@@ -24,6 +25,24 @@ class User < ApplicationRecord
 
     encrypt_password
     save!
+  end
+
+  def generate_password_token
+    self.reset_password_token = SecureRandom.rand(100_000..999_999)
+    self.reset_password_sent_at = Time.now
+    save!
+  end
+
+  def send_password_reset_email
+    UserMailer.password_reset(self).deliver_now
+  end
+
+  def password_token_valid?(token)
+    reset_password_token == token && password_reset_not_expired?
+  end
+
+  def password_reset_not_expired?
+    Time.now < (reset_password_sent_at + RESET_TOKEN_LIFESPAN).localtime
   end
 
   def jwt_payload

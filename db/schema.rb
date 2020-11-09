@@ -73,6 +73,8 @@ ActiveRecord::Schema.define(version: 2020_11_04_153510) do
     t.string "encrypted_password"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
   end
 
   add_foreign_key "carts", "users"
