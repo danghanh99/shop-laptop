@@ -3,4 +3,5 @@ class ApplicationController < ActionController::API
   include JsonResponseHandler
   include JwtToken
   include Authenticatable
+  serialization_scope :view_context
 end
