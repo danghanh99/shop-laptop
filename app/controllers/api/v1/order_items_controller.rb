@@ -13,15 +13,10 @@ class Api::V1::OrderItemsController < ApplicationController
     render json: @order_item
   end
 
-  # POST /order_items
   def create
-    @order_item = OrderItem.new(order_item_params)
-
-    if @order_item.save
-      render json: @order_item, status: :created, location: @order_item
-    else
-      render json: @order_item.errors, status: :unprocessable_entity
-    end
+    order_item = OrderItem.new(order_item_params)
+    order_item.save!
+    render_resource order_item, :created
   end
 
   # PATCH/PUT /order_items/1
@@ -46,6 +41,6 @@ class Api::V1::OrderItemsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def order_item_params
-      params.require(:order_item).permit(:unit_price, :quantity, :cart_id, :order_id, :product_id)
+      params.permit(:unit_price, :quantity, :cart_id, :order_id, :product_id)
     end
 end

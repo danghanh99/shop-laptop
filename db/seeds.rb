@@ -47,13 +47,23 @@ macbook_1 = Product.create_with(
   memory: 512,
 ).find_or_create_by(name: 'Macbook pro 2020')
 
-User.create_with(
+huy = User.create_with(
   email: "huytran.301099@gmail.com",
   address: FFaker::Address.street_address,
   name: FFaker::Name.last_name,
   password: '123456',
   phone: '0123456789',
 ).find_or_create_by(email: "huytran.301099@gmail.com")
+Cart.create_with( user_id: huy.id ).find_or_create_by(user_id: huy.id)
+
+hanh = User.create_with(
+  email: "ldhanh1999@gmail.com",
+  address: FFaker::Address.street_address,
+  name: 'dang hanh',
+  password: '123456',
+  phone: '0123456789',
+).find_or_create_by(email: "ldhanh1999@gmail.com")
+Cart.create_with( user_id: hanh.id ).find_or_create_by(user_id: hanh.id)
 
 10.times do |i|
   user = User.create_with(
