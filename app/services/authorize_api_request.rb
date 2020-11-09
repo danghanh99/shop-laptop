@@ -4,7 +4,6 @@ class AuthorizeApiRequest
   end
 
   def current_user
-    byebug
     user = User.find_by(id: decode_auth_token[:user_id])
     raise(ExceptionHandler::Unauthorized, 'User authentication failed') unless user
     user

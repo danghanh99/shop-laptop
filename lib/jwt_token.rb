@@ -17,7 +17,6 @@ module JwtToken
   end
 
   def self.decode(token)
-    byebug
     body = JWT.decode(token, JwtToken.render_secret_key_base, { algorithm: ALGORITHM })[0]
     HashWithIndifferentAccess.new body
   rescue JWT::ExpiredSignature
