@@ -1,5 +1,5 @@
 class Api::V1::ProductsController < ApplicationController
-  skip_before_action :current_user, only: %i[index show]
+  skip_before_action :current_user
   before_action :set_product, only: [:show, :update, :destroy]
 
   def index
