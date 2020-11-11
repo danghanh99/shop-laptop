@@ -16,6 +16,7 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { in: 6..40 },
                             format: { with: PASSWORD_FORMAT }, on: %i[create account_setup]
   before_create :encrypt_password
+  scope :user_name, ->(search) { where('name ILIKE :search', search: "%#{search}%") if search }
 
   def update_password(password_params)
     raise(ArgumentError, 'Your password was incorrect.') unless check_valid_password(password_params[:old_password])

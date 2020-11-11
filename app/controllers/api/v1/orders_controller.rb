@@ -3,9 +3,8 @@ class Api::V1::OrdersController < ApplicationController
 
   # GET /orders
   def index
-    @orders = Order.all
-
-    render json: @orders
+    orders = Order.search(params)
+    render_collection(orders, OrderSerializer)
   end
 
   # GET /orders/1
