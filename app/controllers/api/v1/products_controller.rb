@@ -32,6 +32,6 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def product_params
-    params.permit(:name, :price, :quantity, :ram, :memory, :category_id)
+    params.permit(:name, :price, :quantity, :ram, :memory, :category_id, :picture)
   end
 end

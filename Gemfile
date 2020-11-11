@@ -3,6 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.1'
 
+gem 'carrierwave-base64'
+gem "carrierwave"
 gem 'active_model_serializers'
 gem 'rack-attack'
 gem 'rack-cors'

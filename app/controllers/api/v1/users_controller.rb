@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :current_user
+  before_action :current_user 
+  skip_before_action :current_user, only: [:create]
   before_action :set_user, only: %i[show update destroy update_password]
 
   def index
