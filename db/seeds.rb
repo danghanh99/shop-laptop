@@ -11,12 +11,10 @@ hp_1 = Product.create_with(
   memory: 256,
 ).find_or_create_by(name: 'HP 2020')
 
-byebug
 image_src = File.join(Rails.root, "/public/uploads/product/picture/6/macbook_pro.jpg")
 src_file = File.new(image_src)
 hp_1.picture = src_file
 hp_1.save!
-byebug
 
 hp_2 = Product.create_with(
   category_id: hp.id,

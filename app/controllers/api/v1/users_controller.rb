@@ -1,7 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :current_user 
-  skip_before_action :current_user, only: [:create]
   before_action :set_user, only: %i[show update destroy update_password]
+  skip_before_action :current_user, only: [:create]
 
   def index
     users = User.all.includes(:cart)
