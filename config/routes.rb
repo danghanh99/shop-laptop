@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       resources :users do
         member do
           patch '/password', to: 'users#update_password'
-          get 'history_orders', to: ''
+          get 'history_orders', to: 'customers/orders#index'
         end
       end
     end
