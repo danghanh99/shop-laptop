@@ -1,16 +1,13 @@
 class Api::V1::OrderItemsController < ApplicationController
-  before_action :set_order_item, only: [:show, :update, :destroy]
+  before_action :set_order_item, only: [:show, :update, :destroy, :update_quantity]
 
-  # GET /order_items
   def index
-    @order_items = OrderItem.all
-
-    render json: @order_items
+    order_items = OrderItem.all
+    render_collection order_items
   end
 
-  # GET /order_items/1
   def show
-    render json: @order_item
+    render_resource @order_item
   end
 
   def create
@@ -19,28 +16,30 @@ class Api::V1::OrderItemsController < ApplicationController
     render_resource order_item, :created
   end
 
-  # PATCH/PUT /order_items/1
   def update
-    if @order_item.update(order_item_params)
-      render json: @order_item
-    else
-      render json: @order_item.errors, status: :unprocessable_entity
-    end
+    @order_item.update!(order_item_params)
+    render_resource @order_item
   end
 
-  # DELETE /order_items/1
+  def update_quantity
+    @order_item.update!(order_item_update_quantity_params)
+    render_resource @order_item
+  end
+
   def destroy
-    @order_item.destroy
+    @order_item.destroy!
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_order_item
       @order_item = OrderItem.find(params[:id])
     end
 
-    # Only allow a trusted parameter "white list" through.
     def order_item_params
       params.permit(:unit_price, :quantity, :cart_id, :order_id, :product_id)
+    end
+
+    def order_item_update_quantity_params
+      params.permit(:quantity)
     end
 end
