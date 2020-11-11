@@ -2,6 +2,9 @@ hp = Category.create_with( name: 'HP').find_or_create_by(name: 'HP' )
 dell = Category.create_with( name: 'DELL', description: 'strong').find_or_create_by(name: 'DELL' )
 macbook = Category.create_with( name: 'MACBOOK', description: 'expensive').find_or_create_by(name: 'MACBOOK' )
 
+image_src = File.join(Rails.root, "/public/uploads/product/picture/6/macbook_pro.jpg")
+src_file = File.new(image_src)
+
 hp_1 = Product.create_with(
   category_id: hp.id,
   name: 'HP 2020',
@@ -11,8 +14,6 @@ hp_1 = Product.create_with(
   memory: 256,
 ).find_or_create_by(name: 'HP 2020')
 
-image_src = File.join(Rails.root, "/public/uploads/product/picture/6/macbook_pro.jpg")
-src_file = File.new(image_src)
 hp_1.picture = src_file
 hp_1.save!
 
@@ -25,6 +26,9 @@ hp_2 = Product.create_with(
   memory: 512,
 ).find_or_create_by(name: 'HP pro 2020')
 
+hp_2.picture = src_file
+hp_2.save!
+
 dell_1 = Product.create_with(
   category_id: dell.id,
   name: 'Dell 2020',
@@ -33,6 +37,9 @@ dell_1 = Product.create_with(
   ram: 16,
   memory: 256,
 ).find_or_create_by(name: 'Dell 2020')
+
+dell_1.picture = src_file
+dell_1.save!
 
 dell_2 = Product.create_with(
   category_id: dell.id,
@@ -43,6 +50,9 @@ dell_2 = Product.create_with(
   memory: 256,
 ).find_or_create_by(name: 'Dell pro 2020')
 
+dell_2.picture = src_file
+dell_2.save!
+
 macbook_1 = Product.create_with(
   category_id: macbook.id,
   name: 'Macbook pro 2020',
@@ -51,6 +61,9 @@ macbook_1 = Product.create_with(
   ram: 32,
   memory: 512,
 ).find_or_create_by(name: 'Macbook pro 2020')
+
+macbook_1.picture = src_file
+macbook_1.save!
 
 huy = User.create_with(
   email: "huytran.301099@gmail.com",
