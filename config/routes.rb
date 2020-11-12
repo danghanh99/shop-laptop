@@ -7,7 +7,14 @@ Rails.application.routes.draw do
       resources :categories
       resources :products
       resources :carts
-      resources :orders
+      resources :orders do
+        member do
+          patch 'cancelled', to: 'orders#cancelled'
+          patch 'approved', to: 'orders#approved'
+          patch 'done', to: 'orders#done'
+          patch 'deny', to: 'orders#deny'
+        end
+      end
       resources :order_items do
         member do
           put '/quantity', to: 'order_items#update_quantity'

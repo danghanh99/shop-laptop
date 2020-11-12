@@ -1,5 +1,5 @@
 class Api::V1::OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :update, :destroy]
+  before_action :set_order, only: [:show, :update, :destroy, :cancelled, :done, :approved, :deny]
 
   # GET /orders
   def index
@@ -37,6 +37,26 @@ class Api::V1::OrdersController < ApplicationController
     @order.destroy
   end
 
+  def cancelled
+    @order.cancelled!
+    render_resource @order
+  end
+
+  def done
+    @order.shipped!
+    render_resource @order
+  end
+
+  def approved
+    @order.shipping!
+    render_resource @order
+  end
+
+  def deny
+    @order.deny!
+    render_resource @order
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_order
@@ -45,6 +65,6 @@ class Api::V1::OrdersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def order_params
-      params.require(:order).permit(:status, :subtotal, :user_id)
+      params.require(:order).permit(:subtotal, :user_id)
     end
 end

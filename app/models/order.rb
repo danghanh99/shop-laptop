@@ -1,9 +1,13 @@
 class Order < ApplicationRecord
   belongs_to :user
   has_many :order_items
-  enum status: { pending: 'pending', shipping: 'shipping',shipped: 'shipped', cancelled: 'cancelled' }
-  validates :status, presence: true, inclusion: { in: %w[pending shipping shipped cancelled] }
+  enum status: { pending: 'pending', shipping: 'shipping',shipped: 'shipped', cancelled: 'cancelled', deny: 'deny' }
+  validates :status, presence: true, inclusion: { in: %w[pending shipping shipped cancelled deny] }
   validates :subtotal, numericality: { greater_than_or_equal_to: 0 }
+  validates :name, presence: true, length: { in: 2..30 }
+  VALID_PHONE_NUMBER_REGEX = /\d[0-9]\)*\z/.freeze
+  validates :phone, presence: true, allow_nil: true, length: { maximum: 25 },
+                            format: { with: VALID_PHONE_NUMBER_REGEX }
   scope :order_to, ->(to) { where('created_at <= ?', to) if to }
   scope :order_from, ->(from) { where('created_at >= ?', from) if from }
 
