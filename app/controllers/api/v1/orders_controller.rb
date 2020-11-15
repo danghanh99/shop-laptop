@@ -1,51 +1,70 @@
 class Api::V1::OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :update, :destroy]
+  before_action :set_order, only: [:show, :update, :destroy, :cancelled, :done, :approved, :deny]
 
-  # GET /orders
   def index
-    @orders = Order.all
-
-    render json: @orders
+    orders = Order.search(params)
+    render_collection(orders, OrderSerializer)
   end
 
-  # GET /orders/1
   def show
-    render json: @order
+    render_resource @order
   end
 
-  # POST /orders
   def create
-    @order = Order.new(order_params)
-
-    if @order.save
-      render json: @order, status: :created, location: @order
-    else
-      render json: @order.errors, status: :unprocessable_entity
+    Order.transaction do
+      order = Order.new(order_params)
+      order.pending!
+      order_item_ids = params[:order_item_ids] if params[:order_item_ids]
+      raise(ArgumentError, 'Order must containt items') unless order_item_ids
+      order_item_ids.each do |id|
+        item = OrderItem.find id
+        item.cart_id = nil
+        item.order_id = order.id
+        item.save!
+      end
+      render_resource(order, :created)
     end
   end
 
-  # PATCH/PUT /orders/1
-  def update
-    if @order.update(order_params)
-      render json: @order
-    else
-      render json: @order.errors, status: :unprocessable_entity
-    end
+  # def update
+  #   @order.update!(order_params)
+  #   render_resource @order
+  # end
+
+  # def destroy
+  #   @order.destroy
+  # end
+
+  def cancel
+    @order.cancelled!
+    render_resource @order
   end
 
-  # DELETE /orders/1
-  def destroy
-    @order.destroy
+  def done
+    @order.shipped!
+    render_resource @order
+  end
+
+  def approve
+    @order.shipping!
+    render_resource @order
+  end
+
+  def deny
+    @order.denied!
+    render_resource @order
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_order
       @order = Order.find(params[:id])
     end
 
-    # Only allow a trusted parameter "white list" through.
     def order_params
-      params.require(:order).permit(:status, :subtotal, :user_id)
+      params.permit(:subtotal, :user_id, :phone, :user_name, :address)
+    end
+
+    def items_params
+      params.permit(order_item_ids: [])
     end
 end

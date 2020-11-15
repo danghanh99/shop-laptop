@@ -73,6 +73,14 @@ huy = User.create_with(
   phone: '0123456789',
 ).find_or_create_by(email: "huytran.301099@gmail.com")
 Cart.create_with( user_id: huy.id ).find_or_create_by(user_id: huy.id)
+Order.create_with(
+  user_id: huy.id,
+  status: 'shipping',
+  subtotal: 100,
+  user_name: 'huy',
+  address: '197 nguyen luong bang',
+  phone: '0123456789'
+).find_or_create_by(user_id: huy.id, status: 'shipping', subtotal: 100)
 
 hanh = User.create_with(
   email: "ldhanh1999@gmail.com",
@@ -82,6 +90,23 @@ hanh = User.create_with(
   phone: '0123456789',
 ).find_or_create_by(email: "ldhanh1999@gmail.com")
 Cart.create_with( user_id: hanh.id ).find_or_create_by(user_id: hanh.id)
+Order.create_with(
+  user_id: hanh.id,
+  status: 'shipped',
+  subtotal: 100,
+  user_name: 'hanh',
+  address: '197 nguyen luong bang',
+  phone: '0123456789'
+).find_or_create_by(user_id: hanh.id, status: 'shipped', subtotal: 100)
+
+Order.create_with(
+  user_id: hanh.id,
+  status: 'cancelled',
+  subtotal: 100,
+  user_name: 'hanh',
+  address: '197 nguyen luong bang',
+  phone: '0123456789'
+).find_or_create_by(user_id: hanh.id, status: 'cancelled', subtotal: 100)
 
 10.times do |i|
   user = User.create_with(
@@ -92,4 +117,12 @@ Cart.create_with( user_id: hanh.id ).find_or_create_by(user_id: hanh.id)
     phone: '0123456789',
   ).find_or_create_by(email: "user_#{i}@gmail.com")
   Cart.create_with( user_id: user.id ).find_or_create_by(user_id: user.id)
+  Order.create_with(
+    user_id: user.id,
+    status: 'pending',
+    subtotal: 100,
+    user_name: user.name,
+    address: user.address,
+    phone: user.phone
+  ).find_or_create_by(user_id: user.id, status: 'pending', subtotal: 100)
 end
