@@ -73,7 +73,7 @@ huy = User.create_with(
   phone: '0123456789',
 ).find_or_create_by(email: "huytran.301099@gmail.com")
 Cart.create_with( user_id: huy.id ).find_or_create_by(user_id: huy.id)
-Order.create_with(
+order0 =  Order.create_with(
   user_id: huy.id,
   status: 'shipping',
   subtotal: 100,
@@ -81,6 +81,12 @@ Order.create_with(
   address: '197 nguyen luong bang',
   phone: '0123456789'
 ).find_or_create_by(user_id: huy.id, status: 'shipping', subtotal: 100)
+OrderItem.create_with(
+  unit_price: 200000,
+  quantity: 10,
+  order_id: order0.id,
+  product_id: macbook_1.id,
+).find_or_create_by(unit_price: 200000, quantity: 10, order_id: order0.id, product_id: macbook_1.id)
 
 hanh = User.create_with(
   email: "ldhanh1999@gmail.com",
@@ -90,7 +96,7 @@ hanh = User.create_with(
   phone: '0123456789',
 ).find_or_create_by(email: "ldhanh1999@gmail.com")
 Cart.create_with( user_id: hanh.id ).find_or_create_by(user_id: hanh.id)
-Order.create_with(
+order1 =  Order.create_with(
   user_id: hanh.id,
   status: 'shipped',
   subtotal: 100,
@@ -98,8 +104,14 @@ Order.create_with(
   address: '197 nguyen luong bang',
   phone: '0123456789'
 ).find_or_create_by(user_id: hanh.id, status: 'shipped', subtotal: 100)
+OrderItem.create_with(
+  unit_price: 200000,
+  quantity: 10,
+  order_id: order1.id,
+  product_id: hp_1.id,
+).find_or_create_by(unit_price: 200000, quantity: 10, order_id: order1.id, product_id: hp_1.id)
 
-Order.create_with(
+order2 = Order.create_with(
   user_id: hanh.id,
   status: 'cancelled',
   subtotal: 100,
@@ -107,6 +119,12 @@ Order.create_with(
   address: '197 nguyen luong bang',
   phone: '0123456789'
 ).find_or_create_by(user_id: hanh.id, status: 'cancelled', subtotal: 100)
+OrderItem.create_with(
+  unit_price: 200000,
+  quantity: 10,
+  order_id: order2.id,
+  product_id: hp_2.id,
+).find_or_create_by(unit_price: 200000, quantity: 10, order_id: order2.id, product_id: hp_2.id)
 
 10.times do |i|
   user = User.create_with(
@@ -125,4 +143,11 @@ Order.create_with(
     address: user.address,
     phone: user.phone
   ).find_or_create_by(user_id: user.id, status: 'pending', subtotal: 100)
+
+  OrderItem.create_with(
+    unit_price: 200000,
+    quantity: 10,
+    cart_id: user.cart.id,
+    product_id: dell_2.id,
+  ).find_or_create_by(unit_price: 200000, quantity: 10, cart_id: user.cart.id, product_id: dell_2.id)
 end
