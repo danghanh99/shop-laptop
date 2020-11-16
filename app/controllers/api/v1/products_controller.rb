@@ -23,7 +23,7 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def destroy
-    @product.destroy
+    @product.destroy!
   end
 
   private
