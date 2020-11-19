@@ -135,7 +135,7 @@ OrderItem.create_with(
     phone: '0123456789',
   ).find_or_create_by(email: "user_#{i}@gmail.com")
   Cart.create_with( user_id: user.id ).find_or_create_by(user_id: user.id)
-  Order.create_with(
+  user_order = Order.create_with(
     user_id: user.id,
     status: 'pending',
     subtotal: 100,
@@ -149,5 +149,5 @@ OrderItem.create_with(
     quantity: 10,
     cart_id: user.cart.id,
     product_id: dell_2.id,
-  ).find_or_create_by(unit_price: 200000, quantity: 10, cart_id: user.cart.id, product_id: dell_2.id)
+  ).find_or_create_by(unit_price: 200000, quantity: 10, order_id: user_order.id, product_id: dell_2.id)
 end
