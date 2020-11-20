@@ -82,6 +82,7 @@ order0 =  Order.create_with(
   phone: '0123456789'
 ).find_or_create_by(user_id: huy.id, status: 'shipping', subtotal: 100)
 OrderItem.create_with(
+  product_name: macbook_1.name,
   unit_price: 200000,
   quantity: 10,
   order_id: order0.id,
@@ -105,6 +106,7 @@ order1 =  Order.create_with(
   phone: '0123456789'
 ).find_or_create_by(user_id: hanh.id, status: 'shipped', subtotal: 100)
 OrderItem.create_with(
+  product_name: hp_1.name,
   unit_price: 200000,
   quantity: 10,
   order_id: order1.id,
@@ -120,6 +122,7 @@ order2 = Order.create_with(
   phone: '0123456789'
 ).find_or_create_by(user_id: hanh.id, status: 'cancelled', subtotal: 100)
 OrderItem.create_with(
+  product_name: hp_2.name,
   unit_price: 200000,
   quantity: 10,
   order_id: order2.id,
@@ -145,6 +148,7 @@ OrderItem.create_with(
   ).find_or_create_by(user_id: user.id, status: 'pending', subtotal: 100)
 
   OrderItem.create_with(
+    product_name: dell_2.name,
     unit_price: 200000,
     quantity: 10,
     cart_id: user.cart.id,

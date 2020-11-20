@@ -36,7 +36,7 @@ class Api::V1::OrderItemsController < ApplicationController
     end
 
     def order_item_params
-      params.permit(:unit_price, :quantity, :cart_id, :order_id, :product_id)
+      params.permit(:product_name, :unit_price, :quantity, :cart_id, :order_id, :product_id)
     end
 
     def order_item_update_quantity_params
