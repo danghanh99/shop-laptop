@@ -1,5 +1,5 @@
 class Api::V1::OrdersController < ApplicationController
-  before_action :set_order, only: [:show, :update, :destroy, :cancelled, :done, :approved, :deny]
+  before_action :set_order, only: [:show, :update, :destroy, :cancel, :done, :approve, :deny]
 
   def index
     orders = Order.search(params)
@@ -36,23 +36,35 @@ class Api::V1::OrdersController < ApplicationController
   # end
 
   def cancel
-    @order.cancelled!
-    render_resource @order
+    Order.transaction do
+      raise(ExceptionHandler::BadRequest, 'Something went wrong when trying to cancel order, status wasnot pending') unless @order.pending?
+      @order.cancelled!
+      render_resource @order
+    end
   end
 
   def done
-    @order.shipped!
-    render_resource @order
+    Order.transaction do
+      raise(ExceptionHandler::BadRequest, 'Something went wrong when trying to done order, status wasnot shipping') unless @order.shipping?
+      @order.shipped!
+      render_resource @order
+    end
   end
 
   def approve
-    @order.shipping!
-    render_resource @order
+    Order.transaction do
+      raise(ExceptionHandler::BadRequest, 'Something went wrong when trying to approve order, status wasnot pending') unless @order.pending?
+      @order.shipping!
+      render_resource @order
+    end
   end
 
   def deny
-    @order.denied!
-    render_resource @order
+    Order.transaction do
+      raise(ExceptionHandler::BadRequest, 'Something went wrong when trying to deny order, status wasnot pending') unless @order.pending?
+      @order.denied!
+      render_resource @order
+    end
   end
 
   private
