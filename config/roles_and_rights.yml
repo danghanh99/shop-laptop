@@ -1,0 +1,12 @@
+user:
+  users:
+    - show
+    - create
+    - update
+    - update_status
+    - update_password
+admin:
+  users:
+    - index
+  sessions:
+    - create

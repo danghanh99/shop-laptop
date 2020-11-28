@@ -16,8 +16,15 @@ class User < ApplicationRecord
   validates :password, presence: true, length: { in: 6..40 },
                             format: { with: PASSWORD_FORMAT }, on: %i[create account_setup]
   before_create :encrypt_password
+  validate :validate_roles_inclusion
+  ALLOWED_ROLES = %w[ADMIN USER].freeze
+
   scope :user_name, ->(search) { where('name ILIKE :search', search: "%#{search}%") if search }
   scope :search_user, ->(search) { where('name ILIKE :search OR email ILIKE :search OR phone ILIKE :search OR address ILIKE :search', search: "%#{search}%") if search }
+
+  def validate_roles_inclusion
+    errors.add(:record, 'roles have to include [USER ADMIN]') if roles.any? { |it| ALLOWED_ROLES.exclude?(it) }
+  end
 
   def update_password(password_params)
     raise(ArgumentError, 'Your password was incorrect.') unless check_valid_password(password_params[:old_password])
@@ -51,6 +58,12 @@ class User < ApplicationRecord
     {
       user_id: id
     }
+  end
+
+  def self.build_employee(create_params)
+    user = User.new(create_params)
+    user.roles << 'USER'
+    user
   end
 
   def encrypt_password

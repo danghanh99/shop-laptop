@@ -1,5 +1,5 @@
 class Api::V1::PasswordController < ApplicationController
-  skip_before_action :current_user
+  skip_before_action :authorize_request
   before_action :set_user
   before_action :check_token, only: %i[update validate_token]
   def create

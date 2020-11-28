@@ -1,5 +1,5 @@
 class Api::V1::ProductsController < ApplicationController
-  skip_before_action :current_user
+  skip_before_action :authorize_request
   before_action :set_product, only: [:show, :update, :destroy]
 
   def index

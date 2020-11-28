@@ -71,6 +71,7 @@ huy = User.create_with(
   name: FFaker::Name.last_name,
   password: '123456',
   phone: '0123456789',
+  roles: %w[USER ADMIN]
 ).find_or_create_by(email: "huytran.301099@gmail.com")
 Cart.create_with( user_id: huy.id ).find_or_create_by(user_id: huy.id)
 order0 =  Order.create_with(
@@ -95,6 +96,7 @@ hanh = User.create_with(
   name: 'dang hanh',
   password: '123456',
   phone: '0123456789',
+  roles: %w[USER ADMIN]
 ).find_or_create_by(email: "ldhanh1999@gmail.com")
 Cart.create_with( user_id: hanh.id ).find_or_create_by(user_id: hanh.id)
 order1 =  Order.create_with(
@@ -136,6 +138,7 @@ OrderItem.create_with(
     name: FFaker::Name.last_name,
     password: '123456',
     phone: '0123456789',
+    roles: %w[USER]
   ).find_or_create_by(email: "user_#{i}@gmail.com")
   Cart.create_with( user_id: user.id ).find_or_create_by(user_id: user.id)
   user_order = Order.create_with(

@@ -1,6 +1,6 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: %i[show update destroy update_password]
-  skip_before_action :current_user, only: [:create]
+  skip_before_action :authorize_request, only: [:create, :show]
 
   def index
     users = User.search(params)
@@ -12,7 +12,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create
-    user = User.new(create_params)
+    user = User.build_employee(create_params)
     user.save!
     Cart.create! user_id: user.id
     render_resource user, :created

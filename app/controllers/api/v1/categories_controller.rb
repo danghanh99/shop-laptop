@@ -1,6 +1,6 @@
 module Api::V1
   class CategoriesController < ApplicationController
-    skip_before_action :current_user, only: %i[index show]
+    skip_before_action :authorize_request, only: %i[index show]
     before_action :set_category, only: [:show, :update, :destroy]
 
     def index
