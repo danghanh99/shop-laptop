@@ -10,12 +10,17 @@ Rails.application.routes.draw do
       resources :users do
         member do
           patch '/password', to: 'users#update_password'
-          get 'history_orders', to: 'customers/orders#index'
-          get 'cart', to: 'customers/carts#customer_index'
+          get 'history_orders', to: 'customers/orders#customer_index'
+          get 'cart', to: 'customers/carts#customer_show'
         end
       end
 
-      resources :categories
+      resources :categories do
+        member do
+          patch '/add_products', to: 'categories#add_products'
+        end
+      end
+
       resources :products
       resources :carts
       resources :orders do

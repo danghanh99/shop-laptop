@@ -1,7 +1,13 @@
 module Api::V1
   class CategoriesController < ApplicationController
     skip_before_action :authorize_request, only: %i[index show]
-    before_action :set_category, only: [:show, :update, :destroy]
+    before_action :set_category, only: [:show, :update, :destroy, :add_products]
+
+    def add_products
+      products = Product.where(id: params[:product_ids])
+      products.update_all(category_id: @category.id)
+      render_resource @category
+    end
 
     def index
       categories = Category.all

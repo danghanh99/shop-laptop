@@ -14,6 +14,7 @@ user:
     - show
   products:
     - show
+    - index
   order_items:
     - show
     - create
@@ -25,9 +26,10 @@ user:
     - show
     - create
     - cancel
+    - customer_index
   carts:
     - show
-    - customer_index
+    - customer_show
 admin:
   users:
     - index
@@ -37,9 +39,9 @@ admin:
     - index
     - update
     - destroy
+    - add_products
   products:
     - create
-    - index
     - update
     - destroy
   order_items:
