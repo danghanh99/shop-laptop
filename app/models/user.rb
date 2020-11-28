@@ -17,6 +17,7 @@ class User < ApplicationRecord
                             format: { with: PASSWORD_FORMAT }, on: %i[create account_setup]
   before_create :encrypt_password
   scope :user_name, ->(search) { where('name ILIKE :search', search: "%#{search}%") if search }
+  scope :search_user, ->(search) { where('name ILIKE :search OR email ILIKE :search OR phone ILIKE :search OR address ILIKE :search', search: "%#{search}%") if search }
 
   def update_password(password_params)
     raise(ArgumentError, 'Your password was incorrect.') unless check_valid_password(password_params[:old_password])
@@ -62,5 +63,11 @@ class User < ApplicationRecord
 
   def check_valid_password(password)
     encrypted_password == User.generate_encrypted_password(password, encrypted_password.first(29))
+  end
+
+  def self.search(params)
+    users = User.includes(:cart)
+    users = users.search_user(params[:search])
+    users
   end
 end

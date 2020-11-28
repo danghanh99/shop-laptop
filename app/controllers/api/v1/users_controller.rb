@@ -3,7 +3,7 @@ class Api::V1::UsersController < ApplicationController
   skip_before_action :current_user, only: [:create]
 
   def index
-    users = User.all.includes(:cart)
+    users = User.search(params)
     render_collection users
   end
 
