@@ -7,7 +7,6 @@ class Api::V1::OrdersController < ApplicationController
   end
 
   def show
-    byebug
     render_resource @order
   end
 
