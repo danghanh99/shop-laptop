@@ -1,12 +1,53 @@
 user:
+  sessions:
+    - create
+  password:
+    - create
+    - validate_token
+    - update
   users:
-    - show
     - create
     - update
-    - update_status
     - update_password
+    - show
+  categories:
+    - show
+  products:
+    - show
+  order_items:
+    - show
+    - create
+    - index
+    - update
+    - update_quantity
+    - destroy
+  orders:
+    - show
+    - create
+    - cancel
+  carts:
+    - show
+    - customer_index
 admin:
   users:
     - index
-  sessions:
+    - destroy
+  categories:
     - create
+    - index
+    - update
+    - destroy
+  products:
+    - create
+    - index
+    - update
+    - destroy
+  order_items:
+    - index
+  orders:
+    - index
+    - done
+    - approve
+    - deny
+  carts:
+    - index
