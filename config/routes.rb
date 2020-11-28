@@ -11,7 +11,7 @@ Rails.application.routes.draw do
         member do
           patch '/password', to: 'users#update_password'
           get 'history_orders', to: 'customers/orders#index'
-          get 'cart', to: 'customers/carts#index'
+          get 'cart', to: 'customers/carts#customer_index'
         end
       end
 

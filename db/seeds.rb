@@ -131,6 +131,16 @@ OrderItem.create_with(
   product_id: hp_2.id,
 ).find_or_create_by(unit_price: 200000, quantity: 10, order_id: order2.id, product_id: hp_2.id)
 
+admin = User.create_with(
+  email: "admin@gmail.com",
+  address: FFaker::Address.street_address,
+  name: 'ADMIN',
+  password: '123456',
+  phone: '0123456789',
+  roles: %w[USER ADMIN]
+).find_or_create_by(email: "admin@gmail.com")
+Cart.create_with( user_id: admin.id ).find_or_create_by(user_id: admin.id)
+
 10.times do |i|
   user = User.create_with(
     email: "user_#{i}@gmail.com",
