@@ -13,6 +13,9 @@ class Api::V1::ProductsController < ApplicationController
 
   def create
     product = Product.new(product_params)
+    image_src = File.join(Rails.root, "/public/uploads/product/picture/6/macbook_pro.jpg")
+    src_file = File.new(image_src)
+    product.picture = src_file if params[:picture] == nil
     product.save!
     render_resource(product, :created)
   end
