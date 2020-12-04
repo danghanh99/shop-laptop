@@ -53,3 +53,7 @@ admin:
     - deny
   carts:
     - index
+  statistics:
+    - count_users
+    - count_orders
+    - count_revenue

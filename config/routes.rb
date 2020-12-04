@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   scope module: 'api' do
     namespace :v1 do
+      get '/count_users', to: 'statistics#count_users'
+      get '/count_orders', to: 'statistics#count_orders'
+      get '/count_revenue', to: 'statistics#count_revenue'
       # Session start
       post  'login', to: 'sessions#create'
       # Session end
