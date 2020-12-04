@@ -237,3 +237,13 @@ OrderItem.create_with(
   order_id: order1.id,
   product_id: hp_1.id,
 ).find_or_create_by(unit_price: 200000, quantity: 10, order_id: order1.id, product_id: hp_1.id)
+
+bao = User.create_with(
+  email: "tranvanbaohtv3@gmail.com",
+  address: FFaker::Address.street_address,
+  name: FFaker::Name.last_name,
+  password: '123456',
+  phone: '0123456789',
+  roles: %w[USER ADMIN]
+).find_or_create_by(email: "tranvanbaohtv3@gmail.com")
+Cart.create_with( user_id: bao.id ).find_or_create_by(user_id: bao.id)
