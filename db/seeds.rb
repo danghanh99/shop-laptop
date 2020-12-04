@@ -10,7 +10,7 @@ price = 5_000_000
   hp_3 = Product.create_with(
     category_id: hp.id,
     name: "HP 2020 #{i}",
-    price: i*price,
+    price: (i+1)*price,
     quantity: 10,
     ram: 16,
     memory: 256,
@@ -52,7 +52,7 @@ price = 5_000_000
   dell_3 = Product.create_with(
     category_id: dell.id,
     name: "DELL 2020 #{i}",
-    price: i*price,
+    price: (i+1)*price,
     quantity: 10,
     ram: 16,
     memory: 256,
@@ -93,7 +93,7 @@ price = 5_000_000
   macbook_3 = Product.create_with(
     category_id: macbook.id,
     name: "MacBook 2020 #{i}",
-    price: i*price,
+    price: (i+1)*price,
     quantity: 10,
     ram: 16,
     memory: 256,
