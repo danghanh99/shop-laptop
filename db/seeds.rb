@@ -5,6 +5,23 @@ macbook = Category.create_with( name: 'MACBOOK', description: 'expensive').find_
 image_src = File.join(Rails.root, "/public/uploads/product/picture/6/macbook_pro.jpg")
 src_file = File.new(image_src)
 
+price = 5_000_000
+3.times do |i|
+  hp_3 = Product.create_with(
+    category_id: hp.id,
+    name: "HP 2020 #{i}",
+    price: i*price,
+    quantity: 10,
+    ram: 16,
+    memory: 256,
+  ).find_or_create_by(name: "HP 2020 #{i}")
+
+  image_src = File.join(Rails.root, "public/uploads/product/picture/hp_image.jpg")
+  src_file = File.new(image_src)
+  hp_3.picture = src_file
+  hp_3.save!
+end
+
 hp_1 = Product.create_with(
   category_id: hp.id,
   name: 'HP 2020',
@@ -28,6 +45,24 @@ hp_2 = Product.create_with(
 
 hp_2.picture = src_file
 hp_2.save!
+
+
+price = 5_000_000
+3.times do |i|
+  dell_3 = Product.create_with(
+    category_id: dell.id,
+    name: "DELL 2020 #{i}",
+    price: i*price,
+    quantity: 10,
+    ram: 16,
+    memory: 256,
+  ).find_or_create_by(name: "DELL 2020 #{i}")
+
+  image_src = File.join(Rails.root, "public/uploads/product/picture/dell_img.jpg")
+  src_file = File.new(image_src)
+  dell_3.picture = src_file
+  dell_3.save!
+end
 
 dell_1 = Product.create_with(
   category_id: dell.id,
@@ -53,6 +88,23 @@ dell_2 = Product.create_with(
 dell_2.picture = src_file
 dell_2.save!
 
+price = 5_000_000
+3.times do |i|
+  macbook_3 = Product.create_with(
+    category_id: macbook.id,
+    name: "MacBook 2020 #{i}",
+    price: i*price,
+    quantity: 10,
+    ram: 16,
+    memory: 256,
+  ).find_or_create_by(name: "MacBook 2020 #{i}")
+
+  image_src = File.join(Rails.root, "public/uploads/product/picture/mac_img.jpg")
+  src_file = File.new(image_src)
+  macbook_3.picture = src_file
+  macbook_3.save!
+end
+
 macbook_1 = Product.create_with(
   category_id: macbook.id,
   name: 'Macbook pro 2020',
@@ -77,11 +129,11 @@ Cart.create_with( user_id: huy.id ).find_or_create_by(user_id: huy.id)
 order0 =  Order.create_with(
   user_id: huy.id,
   status: 'shipping',
-  subtotal: 100,
+  subtotal: 10_000_000,
   user_name: 'huy',
   address: '197 nguyen luong bang',
   phone: '0123456789'
-).find_or_create_by(user_id: huy.id, status: 'shipping', subtotal: 100)
+).find_or_create_by(user_id: huy.id, status: 'shipping', subtotal: 10_000_000)
 OrderItem.create_with(
   product_name: macbook_1.name,
   unit_price: 200000,
@@ -102,11 +154,11 @@ Cart.create_with( user_id: hanh.id ).find_or_create_by(user_id: hanh.id)
 order1 =  Order.create_with(
   user_id: hanh.id,
   status: 'shipped',
-  subtotal: 100,
+  subtotal: 10_000_000,
   user_name: 'hanh',
   address: '197 nguyen luong bang',
   phone: '0123456789'
-).find_or_create_by(user_id: hanh.id, status: 'shipped', subtotal: 100)
+).find_or_create_by(user_id: hanh.id, status: 'shipped', subtotal: 10_000_000)
 OrderItem.create_with(
   product_name: hp_1.name,
   unit_price: 200000,
@@ -118,11 +170,11 @@ OrderItem.create_with(
 order2 = Order.create_with(
   user_id: hanh.id,
   status: 'cancelled',
-  subtotal: 100,
+  subtotal: 10_000_000,
   user_name: 'hanh',
   address: '197 nguyen luong bang',
   phone: '0123456789'
-).find_or_create_by(user_id: hanh.id, status: 'cancelled', subtotal: 100)
+).find_or_create_by(user_id: hanh.id, status: 'cancelled', subtotal: 10_000_000)
 OrderItem.create_with(
   product_name: hp_2.name,
   unit_price: 200000,
@@ -154,11 +206,11 @@ Cart.create_with( user_id: admin.id ).find_or_create_by(user_id: admin.id)
   user_order = Order.create_with(
     user_id: user.id,
     status: 'pending',
-    subtotal: 100,
+    subtotal: 10_000_000,
     user_name: user.name,
     address: user.address,
     phone: user.phone
-  ).find_or_create_by(user_id: user.id, status: 'pending', subtotal: 100)
+  ).find_or_create_by(user_id: user.id, status: 'pending', subtotal: 10_000_000)
 
   OrderItem.create_with(
     product_name: dell_2.name,
@@ -168,3 +220,20 @@ Cart.create_with( user_id: admin.id ).find_or_create_by(user_id: admin.id)
     product_id: dell_2.id,
   ).find_or_create_by(unit_price: 200000, quantity: 10, order_id: user_order.id, product_id: dell_2.id)
 end
+
+order_10 =  Order.create_with(
+  user_id: hanh.id,
+  status: 'shipped',
+  subtotal: 20_000_000,
+  user_name: 'hanh',
+  address: '197 nguyen luong bang',
+  phone: '0123456789'
+).find_or_create_by(user_id: hanh.id, status: 'shipped', subtotal: 20_000_000)
+order_10.update! created_at: '2019-02-02'
+OrderItem.create_with(
+  product_name: hp_1.name,
+  unit_price: 200000,
+  quantity: 10,
+  order_id: order1.id,
+  product_id: hp_1.id,
+).find_or_create_by(unit_price: 200000, quantity: 10, order_id: order1.id, product_id: hp_1.id)
