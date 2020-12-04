@@ -11,8 +11,8 @@ class Api::V1::OrderItemsController < ApplicationController
   end
 
   def create
-    cart = Cart.find(order_item_params[:cart_id])
-    order_item = cart.order_items.find_by product_id: order_item_params[:product_id]
+    cart = Cart.find(order_item_params[:cart_id]) if order_item_params[:cart_id].present?
+    order_item = cart.order_items.find_by product_id: order_item_params[:product_id] if cart.present?
     order_item.update! quantity: order_item.quantity + 1 if order_item.present?
     order_item = OrderItem.create!(order_item_params) unless order_item.present?
     render_resource order_item, :created
