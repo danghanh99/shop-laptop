@@ -18,6 +18,8 @@ class Api::V1::OrderItemsController < ApplicationController
       render_resource order_item
     else
       order_item = OrderItem.create!(order_item_params)
+      product = Product.find(order_item.product_id)
+      order_item.update! picture: product.picture
       render_resource order_item, :created
     end
   end
