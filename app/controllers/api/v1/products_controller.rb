@@ -12,6 +12,7 @@ class Api::V1::ProductsController < ApplicationController
   end
 
   def create
+    params[:picture] = nil
     product = Product.new(product_params)
     image_src = File.join(Rails.root, "/public/uploads/product/picture/6/macbook_pro.jpg")
     src_file = File.new(image_src)
