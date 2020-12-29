@@ -26,11 +26,21 @@ class Api::V1::StatisticsController < ApplicationController
     orders = Order.where status: 'shipped'
     orders = orders.where('extract(year  from created_at) = ?', year) if year
     response.each do |key, value|
-      orders = orders.where('extract(month from created_at) = ?', key)
-      response[key][:order_quantity] = orders.count || 0
-      response[key][:product_quantity] = 0
-      response[key][:revenue] = orders.pluck(:subtotal).inject{ |item,sum| sum+= item} || 0
+      orders_in_month = orders.where('extract(month from created_at) = ?', key)
+      response[key][:order_quantity] = orders_in_month.count || 0
+      response[key][:product_quantity] = count_products(orders_in_month) || 0
+      response[key][:revenue] = orders_in_month.pluck(:subtotal).inject{ |item,sum| sum+= item} || 0
     end
     response
+  end
+
+  def count_products(orders_in_month)
+    count = 0
+    orders_in_month.each do |order|
+      order.order_items.each do |item|
+        count += item.quantity
+      end
+    end
+    count
   end
 end
