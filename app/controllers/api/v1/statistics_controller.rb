@@ -17,15 +17,20 @@ class Api::V1::StatisticsController < ApplicationController
   end
 
   def count_revenue
-    orders = Order.where status: 'shipped'
-    orders = orders.where('extract(year  from created_at) = ?', params[:year]) if params[:year].present?
-    orders = orders.where('extract(month from created_at) = ?', params[:month]) if params[:month].present?
-    response = Hash.new()
-    response[:year] = params[:year] || 0
-    response[:month] = params[:month] || 0
-    response[:order_quantity] = orders.count || 0
-    response[:revenue] = orders.pluck(:subtotal).inject{ |item,sum| sum+= item} || 0
+    response = count_revenue_in_year(params[:year]) if params[:year].present?
     render json: response, status: :ok
   end
-  
+
+  def count_revenue_in_year(year)
+    response = {1 =>{}, 2=>{}, 3=> {}, 4=>{}, 5 =>{}, 6=>{}, 7=> {}, 8=>{}, 9 =>{}, 10=>{}, 11=> {}, 12=>{} }
+    orders = Order.where status: 'shipped'
+    orders = orders.where('extract(year  from created_at) = ?', year) if year
+    response.each do |key, value|
+      orders = orders.where('extract(month from created_at) = ?', key)
+      response[key][:order_quantity] = orders.count || 0
+      response[key][:product_quantity] = 0
+      response[key][:revenue] = orders.pluck(:subtotal).inject{ |item,sum| sum+= item} || 0
+    end
+    response
+  end
 end
