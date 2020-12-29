@@ -8,7 +8,7 @@ class Product < ApplicationRecord
   mount_base64_uploader :picture, PictureUploader
 
   scope :product_name, ->(search) { where('name ILIKE :search', search: "%#{search}%") if search }
-  default_scope { order('id ASC') }
+  default_scope { order('id DESC') }
 
   def self.search(params)
     Product.includes(:category).product_name(params[:search])

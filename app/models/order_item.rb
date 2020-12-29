@@ -8,5 +8,5 @@ class OrderItem < ApplicationRecord
   attr_accessor :picture
   mount_base64_uploader :picture, PictureUploader
   
-  default_scope { order('id ASC') }
+  default_scope { order('id DESC') }
 end

@@ -19,7 +19,7 @@ class User < ApplicationRecord
   validate :validate_roles_inclusion
   ALLOWED_ROLES = %w[ADMIN USER].freeze
 
-  default_scope { order('id ASC') }
+  default_scope { order('id DESC') }
   scope :user_name, ->(search) { where('name ILIKE :search', search: "%#{search}%") if search }
   scope :search_user, ->(search) { where('name ILIKE :search OR email ILIKE :search OR phone ILIKE :search OR address ILIKE :search', search: "%#{search}%") if search }
 

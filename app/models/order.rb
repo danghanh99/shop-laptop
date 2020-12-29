@@ -11,7 +11,7 @@ class Order < ApplicationRecord
                             format: { with: VALID_PHONE_NUMBER_REGEX }
   scope :order_from, ->(from) { where('created_at >= ?', from) if from }
   scope :order_to, ->(to) { where('created_at <= ?', to) if to }
-  default_scope { order('id ASC') }
+  default_scope { order('id DESC') }
 
   def self.search(params)
     orders = Order.all
