@@ -11,6 +11,7 @@ module Api::V1
 
     def index
       categories = Category.all
+      categories = paginate(categories)
       render_collection categories
     end
 

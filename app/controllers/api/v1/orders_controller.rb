@@ -3,6 +3,7 @@ class Api::V1::OrdersController < ApplicationController
 
   def index
     orders = Order.search(params)
+    orders = paginate(orders)
     render_collection(orders, OrderSerializer)
   end
 

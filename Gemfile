@@ -17,6 +17,8 @@ gem 'jwt'
 gem 'pg'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
+# Use pagination
+gem 'kaminari-activerecord'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production

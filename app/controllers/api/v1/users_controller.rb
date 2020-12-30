@@ -4,6 +4,7 @@ class Api::V1::UsersController < ApplicationController
 
   def index
     users = User.search(params)
+    users = paginate(users)
     render_collection users
   end
 

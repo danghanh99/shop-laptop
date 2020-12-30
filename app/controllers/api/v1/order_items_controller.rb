@@ -3,6 +3,7 @@ class Api::V1::OrderItemsController < ApplicationController
 
   def index
     order_items = OrderItem.all
+    order_items = paginate(order_items)
     render_collection order_items
   end
 
