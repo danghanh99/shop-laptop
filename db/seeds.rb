@@ -230,13 +230,15 @@ order_10 =  Order.create_with(
   phone: '0123456789'
 ).find_or_create_by(user_id: hanh.id, status: 'shipped', subtotal: 20_000_000)
 order_10.update! created_at: '2019-02-02'
-OrderItem.create_with(
+order_10.update! updated_at: order_10.created_at
+item_10 = OrderItem.create_with(
   product_name: hp_1.name,
-  unit_price: 200000,
-  quantity: 10,
-  order_id: order1.id,
+  unit_price: 2_000_000,
+  quantity: 4,
+  order_id: order_10.id,
   product_id: hp_1.id,
-).find_or_create_by(unit_price: 200000, quantity: 10, order_id: order1.id, product_id: hp_1.id)
+).find_or_create_by(unit_price: 2_000_000, quantity: 10, order_id: order_10.id, product_id: hp_1.id)
+order_10.update! subtotal: item_10.quantity * 2_000_000
 
 bao = User.create_with(
   email: "tranvanbaohtv3@gmail.com",
@@ -247,3 +249,24 @@ bao = User.create_with(
   roles: %w[USER ADMIN]
 ).find_or_create_by(email: "tranvanbaohtv3@gmail.com")
 Cart.create_with( user_id: bao.id ).find_or_create_by(user_id: bao.id)
+
+12.times do |i|
+  order_by_month =  Order.create_with(
+    user_id: hanh.id,
+    status: 'shipped',
+    subtotal: 20_000_000,
+    user_name: "hanh #{i+1}",
+    address: '197 nguyen luong bang',
+    phone: '0123456789'
+  ).find_or_create_by(user_id: hanh.id, status: 'shipped', subtotal: 20_000_000, user_name: "hanh #{i+1}")
+  order_by_month.update! created_at: "2020-#{i+1}-02"
+  order_by_month.update! updated_at: order_by_month.created_at
+  item = OrderItem.create_with(
+    product_name: hp_1.name,
+    unit_price: 200000,
+    quantity: i+1,
+    order_id: order_by_month.id,
+    product_id: hp_1.id,
+  ).find_or_create_by(unit_price: 200000, quantity: i+1, order_id: order_by_month.id, product_id: hp_1.id)
+  order_by_month.update! subtotal: item.quantity * 2_000_000
+end
